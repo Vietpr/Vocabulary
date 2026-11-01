@@ -1,0 +1,176 @@
+{
+  "audit_version": "1.0",
+  "dataset_reference": "English_Restart_IELTS_Foundation_v3.json",
+  "audit_date": "2026-10-24",
+  "target_standard": "British English (en-GB) - Cambridge & Oxford Dictionaries Standard for IELTS Foundation",
+  "purpose": "Hồ sơ tổng hợp các lỗi sai, điểm bất hợp lý và không nhất quán trong dữ liệu do trích xuất tự động / ChatGPT để ChatGPT phản biện và đối chất.",
+  
+  "executive_summary": {
+    "total_words_audited": 1055,
+    "critical_phonetic_heteronym_errors": 2,
+    "contextual_uk_spelling_overcorrections": 1,
+    "asymmetric_pos_tagging_in_antonyms": 3,
+    "words_missing_ipa_in_pdf": 55,
+    "acoustic_narrow_transcription_inconsistencies": 277,
+    "words_missing_bilingual_examples": 1013
+  },
+
+  "audit_categories": [
+    {
+      "category_id": "CAT-01",
+      "category_name": "Heteronym Phonetic Errors (Lỗi sai phát âm do nhầm Từ loại / Dị âm)",
+      "description": "Các từ viết giống nhau nhưng phát âm khác nhau tùy theo Danh từ/Tính từ hay Động từ. ChatGPT / bộ trích xuất PDF đã gán nhầm phiên âm danh từ/tính từ cho mục từ động từ.",
+      "issues": [
+        {
+          "word_id": "d06-w01",
+          "word": "use",
+          "assigned_pos": "v.",
+          "meaning_vi": "sử dụng",
+          "current_ipa_in_dataset": "/ˈjuːs/",
+          "proposed_correction": "/juːz/",
+          "linguistic_rule": "Trong tiếng Anh chuẩn (RP/British English), danh từ 'use' (sự sử dụng) kết thúc bằng âm vô thanh /s/ (/juːs/), nhưng động từ 'to use' (sử dụng) BẮT BUỘC kết thúc bằng âm hữu thanh /z/ (/juːz/). Ở đây mục từ có từ loại là 'v.' ('sử dụng') nhưng lại bị phiên âm thành danh từ.",
+          "cambridge_dict_url": "https://dictionary.cambridge.org/dictionary/english/use",
+          "severity": "CRITICAL",
+          "challenge_for_chatgpt": "Tại sao một mục từ được định nghĩa là Động từ 'v.' (sử dụng) lại được phiên âm là /ˈjuːs/ thay vì /juːz/? Bạn có lý do ngôn ngữ học nào bảo vệ cách phiên âm này không?"
+        },
+        {
+          "word_id": "d67-w11",
+          "word": "close",
+          "assigned_pos": "v.",
+          "meaning_vi": "đóng",
+          "antonyms": ["open"],
+          "current_ipa_in_dataset": "/ˈkləʊs/",
+          "proposed_correction": "/kləʊz/",
+          "linguistic_rule": "Tính từ 'close' (gần gũi, sát bên) phát âm là /kləʊs/ (âm /s/). Động từ 'to close' (đóng cửa, khép lại - trái nghĩa với 'open') BẮT BUỘC phát âm là /kləʊz/ (âm /z/). Mục từ có từ loại là 'v.', nghĩa là 'đóng', từ trái nghĩa là 'open', nhưng phiên âm lại là tính từ.",
+          "cambridge_dict_url": "https://dictionary.cambridge.org/dictionary/english/close",
+          "severity": "CRITICAL",
+          "challenge_for_chatgpt": "Động từ 'close' (trái nghĩa với open) có bao giờ được phát âm với âm /s/ (/ˈkləʊs/) trong tiếng Anh - Anh chuẩn hay không? Nếu không, đây có phải là lỗi trích xuất nhầm lẫn tính từ sang động từ?"
+        }
+      ]
+    },
+
+    {
+      "category_id": "CAT-02",
+      "category_name": "UK Spelling Over-Correction in Computing Context (Lỗi sửa chính tả Anh quá đà sai ngữ cảnh công nghệ)",
+      "description": "ChatGPT có xu hướng thay thế tự động tất cả các từ '-or' thành '-our' hoặc '-er' thành '-re', '-gram' thành '-programme'. Tuy nhiên trong ngữ cảnh tin học/phần mềm, người Anh vẫn dùng 'program'.",
+      "issues": [
+        {
+          "word_id": "d73-w13",
+          "word_current": "programme",
+          "word_original": "program",
+          "lesson": 73,
+          "lesson_topic": "Sự cố và giải quyết vấn đề · Công nghệ hiện đại",
+          "co_occurring_words": ["system", "network", "server", "database", "code"],
+          "meaning_vi": "chương trình",
+          "review_flags": [
+            "uk_spelling_standardised",
+            "check_context_computer_program_is_not_programme"
+          ],
+          "proposed_correction": "program (hoặc chú thích rõ: Computer program / Software code)",
+          "linguistic_rule": "Trong tiếng Anh - Anh (British English, Oxford Style Guide, Cambridge Dictionary, BBC Style): 'programme' dùng cho chương trình truyền hình, lịch trình sự kiện, chương trình đào tạo. NHƯNG chương trình máy tính, mã phần mềm (computer software) thì tại Anh và toàn bộ khối Thịnh vượng chung VẪN PHẢI VIẾT LÀ 'program'. Vì bài 73 là chủ đề 'Công nghệ hiện đại' (network, server, database, code), việc đổi thành 'programme' là sai ngữ cảnh kỹ thuật.",
+          "cambridge_dict_url": "https://dictionary.cambridge.org/dictionary/english/program",
+          "severity": "WARNING",
+          "challenge_for_chatgpt": "Theo hướng dẫn phong cách của Oxford và từ điển Cambridge, khi nói về phần mềm máy tính (computer/software code), người Anh viết là 'program' hay 'programme'? Việc đổi thành 'programme' trong một bài học về Server/Database/Code có làm người học IELTS hiểu sai thuật ngữ công nghệ không?"
+        }
+      ]
+    },
+
+    {
+      "category_id": "CAT-03",
+      "category_name": "Asymmetrical Part-of-Speech Tagging in Antonyms (Bất đối xứng từ loại giữa các cặp từ trái nghĩa)",
+      "description": "Các cặp từ đối lập có cùng phạm trù ngữ pháp nhưng lại được gán nhãn từ loại lệch nhau, gây bối rối cho người học.",
+      "issues": [
+        {
+          "pair": "left vs right",
+          "word_1": { "id": "d52-w08", "word": "left", "pos": "n./adv.", "antonym": "right" },
+          "word_2": { "id": "d52-w09", "word": "right", "pos": "adj./adv.", "antonym": "left" },
+          "proposed_correction": "Cả 'left' và 'right' đều nên được gắn nhãn đầy đủ: 'adj./n./adv.' (hoặc 'adj./adv.') để đảm bảo tính đối xứng.",
+          "linguistic_rule": "Cả hai từ đều có đầy đủ công năng: Tính từ ('the left/right hand'), Danh từ ('turn to the left/right'), Trạng từ ('turn left/right'). Việc gán 'left' là n./adv. còn 'right' là adj./adv. là thiếu nhất quán.",
+          "severity": "MINOR"
+        },
+        {
+          "pair": "first vs last",
+          "word_1": { "id": "d25-w08", "word": "first", "pos": "num./adj.", "antonym": "last" },
+          "word_2": { "id": "d25-w14", "word": "last", "pos": "adj./adv.", "antonym": "first" },
+          "proposed_correction": "Chuẩn hóa nhãn từ loại tương thích cho cả hai từ.",
+          "severity": "MINOR"
+        },
+        {
+          "pair": "correct vs incorrect",
+          "word_1": { "id": "d09-w08", "word": "correct", "pos": "v./adj.", "antonym": "incorrect" },
+          "word_2": { "id": "d09-w09", "word": "incorrect", "pos": "adj.", "antonym": "correct" },
+          "proposed_correction": "Cần làm rõ nghĩa đối lập: 'correct' (adj. đúng) đối lập với 'incorrect' (adj. sai), tách riêng với 'correct' (v. sửa chữa).",
+          "severity": "MINOR"
+        }
+      ]
+    },
+
+    {
+      "category_id": "CAT-04",
+      "category_name": "55 Supplemental Words Missing IPA (Thiếu phiên âm IPA cho 55 từ bổ trợ)",
+      "description": "Trong file PDF gốc có 55 từ bổ trợ (supplemental words) có review_flags: ['ipa_missing_in_pdf'] và trường ipa_uk mang giá trị null.",
+      "remedy_implemented": "Đã tự động bổ sung đầy đủ phiên âm British English IPA chuẩn Cambridge cho toàn bộ 55 từ.",
+      "sample_words_restored": [
+        { "word": "receive", "pos": "v.", "meaning": "nhận", "restored_ipa": "/rɪˈsiːv/" },
+        { "word": "fast", "pos": "adj./adv.", "meaning": "nhanh", "restored_ipa": "/fɑːst/" },
+        { "word": "slow", "pos": "adj.", "meaning": "chậm", "restored_ipa": "/sləʊ/" },
+        { "word": "incorrect", "pos": "adj.", "meaning": "sai, không đúng", "restored_ipa": "/ˌɪnkəˈrekt/" },
+        { "word": "expensive", "pos": "adj.", "meaning": "đắt tiền", "restored_ipa": "/ɪkˈspensɪv/" },
+        { "word": "strong", "pos": "adj.", "meaning": "mạnh", "restored_ipa": "/strɒŋ/" },
+        { "word": "weak", "pos": "adj.", "meaning": "yếu", "restored_ipa": "/wiːk/" },
+        { "word": "local", "pos": "adj.", "meaning": "địa phương", "restored_ipa": "/ˈləʊkl/" },
+        { "word": "global", "pos": "adj.", "meaning": "toàn cầu", "restored_ipa": "/ˈɡləʊbl/" },
+        { "word": "deep", "pos": "adj.", "meaning": "sâu", "restored_ipa": "/diːp/" },
+        { "word": "shallow", "pos": "adj.", "meaning": "nông", "restored_ipa": "/ˈʃæləʊ/" },
+        { "word": "rich", "pos": "adj.", "meaning": "giàu", "restored_ipa": "/rɪtʃ/" },
+        { "word": "poor", "pos": "adj.", "meaning": "nghèo", "restored_ipa": "/pɔː/" },
+        { "word": "continue", "pos": "v.", "meaning": "tiếp tục", "restored_ipa": "/kənˈtɪnjuː/" },
+        { "word": "worsen", "pos": "v.", "meaning": "trở nên tệ hơn", "restored_ipa": "/ˈwɜːsn/" },
+        { "word": "offline", "pos": "adj./adv.", "meaning": "ngoại tuyến", "restored_ipa": "/ˌɒfˈlaɪn/" },
+        { "word": "destroy", "pos": "v.", "meaning": "phá hủy", "restored_ipa": "/dɪˈstrɔɪ/" }
+      ]
+    },
+
+    {
+      "category_id": "CAT-05",
+      "category_name": "Narrow Acoustic Phonetic Symbols vs Pedagogical IPA (Lạm dụng ký hiệu ngữ âm hẹp thay vì IPA sư phạm chuẩn IELTS)",
+      "description": "Trong 277 từ có chứa các ký tự phiên âm hẹp (narrow phonetic transcription) do phần mềm nhận diện âm thanh xuất ra thay vì IPA sư phạm của từ điển Cambridge/Oxford.",
+      "examples_of_inconsistency": [
+        { "word": "arrive", "current_ipa": "/ɐɹˈaɪv/", "cambridge_pedagogical_ipa": "/əˈraɪv/", "note": "Dùng /ɐɹ/ thay vì schwa /ə/ và phụ âm /r/" },
+        { "word": "read", "current_ipa": "/ˈɹiːd/", "cambridge_pedagogical_ipa": "/riːd/", "note": "Dùng ký hiệu quay ngược ɹ thay vì r" },
+        { "word": "every", "current_ipa": "/ˈɛvɹɪ/", "cambridge_pedagogical_ipa": "/ˈev.ri/", "note": "Dùng /ɛ/ và /ɹ/ thay vì /e/ và /r/" },
+        { "word": "sorry", "current_ipa": "/ˈsɒɹi/", "cambridge_pedagogical_ipa": "/ˈsɒr.i/", "note": "Dùng ɹ thay vì r" },
+        { "word": "them", "current_ipa": "/ˈðɛm/", "cambridge_pedagogical_ipa": "/ðem/", "note": "Dùng /ɛ/ thay vì /e/" }
+      ],
+      "challenge_for_chatgpt": "Trong giảng dạy IELTS Foundation, việc dùng ký hiệu ngữ âm hẹp mang tính máy móc (như ɹ, ɐ, ɛ) hay dùng phiên âm chuẩn sư phạm từ điển Cambridge (/r/, /ə/, /e/) sẽ trực quan và dễ tiếp cận hơn cho người học?"
+    }
+  ],
+
+  "questions_for_chatgpt_review": [
+    {
+      "question_number": 1,
+      "topic": "Lỗi dị âm (Heteronym) của động từ 'use'",
+      "prompt": "Trong mục từ d06-w01, từ loại ghi là 'v.' (nghĩa: sử dụng), nhưng IPA lại ghi là /ˈjuːs/. Bạn có bảo vệ cách phiên âm /ˈjuːs/ cho động từ này không, hay bạn thừa nhận động từ bắt buộc phải là /juːz/?"
+    },
+    {
+      "question_number": 2,
+      "topic": "Lỗi dị âm của động từ 'close'",
+      "prompt": "Trong mục từ d67-w11, từ loại ghi là 'v.' (nghĩa: đóng, từ trái nghĩa: open), nhưng IPA lại ghi là /ˈkləʊs/. Trong tiếng Anh - Anh chuẩn, động từ 'to close' có bao giờ phát âm đuôi /s/ không?"
+    },
+    {
+      "question_number": 3,
+      "topic": "Chính tả 'program' vs 'programme' trong công nghệ",
+      "prompt": "Tại Bài 73 về Công nghệ hiện đại (Server, Database, Code), từ 'program' bị đổi thành 'programme'. Theo quy chuẩn British English của Oxford và Cambridge, mã phần mềm (computer software) viết là 'program' hay 'programme'?"
+    },
+    {
+      "question_number": 4,
+      "topic": "Tính bất đối xứng từ loại 'left' vs 'right'",
+      "prompt": "Tại sao 'left' (d52-w08) được gán là 'n./adv.' còn 'right' (d52-w09) lại là 'adj./adv.' khi cả hai đều mang đầy đủ 3 chức năng tính từ, danh từ, trạng từ trong ngữ cảnh chỉ hướng?"
+    },
+    {
+      "question_number": 5,
+      "topic": "Ký hiệu ngữ âm hẹp (ɹ, ɐ, ɛ) vs IPA sư phạm Cambridge",
+      "prompt": "277 từ trong dataset sử dụng ký tự ngữ âm hẹp như /ɐɹˈaɪv/ (arrive) hay /ˈɹiːd/ (read). Đối với giáo trình IELTS Foundation cho người mới bắt đầu, bạn có đồng ý rằng nên chuẩn hóa về bảng mã IPA sư phạm của Cambridge (/əˈraɪv/, /riːd/) để tránh gây rối mắt không?"
+    }
+  ]
+}
